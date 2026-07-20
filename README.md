@@ -1,70 +1,155 @@
-# Getting Started with Create React App
+# 🚀 Postify
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Postify is a Full Stack social media web application built with React.js, Express.js, MongoDB, and ImageKit. This project was created to practice full stack development by combining a modern frontend with a RESTful backend.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🛠️ Tech Stack
 
-### `npm start`
+### Frontend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React.js
+- React Router
+- Axios
+- CSS / Tailwind CSS
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Backend
 
-### `npm test`
+- Node.js
+- Express.js
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Database
 
-### `npm run build`
+- MongoDB
+- Mongoose
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Image Storage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- ImageKit
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 📂 Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+Postify/
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   ├── package-lock.json
+│   ├── package.json
+│   └── tailwind.config.js
+│
+├── backend/
+│   ├── src/
+│   ├── package-lock.json
+│   ├── package.json
+│   └── server.js
+│
+├── README.md
+└── .gitignore
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## ✨ Features
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- User Authentication
+- Upload Images
+- Create Posts
+- REST API
+- MongoDB Database
+- Responsive UI
+- Image Storage with ImageKit
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## ⚙️ Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Clone the repository
 
-### Code Splitting
+```bash
+git clone https://github.com/devatikur1/Postify.git
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+### Install Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+cd backend
+npm install
+```
 
-### Making a Progressive Web App
+### Start Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+node server.js
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Install Frontend
 
-### Deployment
+```bash
+cd frontend
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Start Frontend
 
-### `npm run build` fails to minify
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file inside the **backend** folder.
+
+```env
+IMAGEKIT_PRIVATE_KEY=your_private_key
+MONGO_URI=your_mongodb_connection_string
+PORT=5000
+```
+
+---
+
+## 📚 Learning Goals
+
+This project helped me learn:
+
+- Express.js
+- MongoDB & Mongoose
+- REST APIs
+- Image Upload with ImageKit
+- React.js
+- Frontend & Backend Integration
+- Git & GitHub Workflow
+
+---
+
+## 🚀 Future Plans
+
+- JWT Authentication
+- Like & Comment System
+- Profile Page
+- Search Users
+- Notifications
+- Dark Mode
+
+---
+
+## 👨‍💻 Author
+
+**Atikur Rahman**
+
+Learning Full Stack Web Development 🚀
+
+GitHub: https://github.com/devatikur1
+
+---
+
+⭐ If you like this project, consider giving it a star.
