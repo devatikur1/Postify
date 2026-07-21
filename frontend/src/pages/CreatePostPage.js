@@ -1,12 +1,69 @@
-import React, { useState } from "react";
-import { ImagePlus } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { ImagePlus, Loader2 } from "lucide-react";
+import axios from "axios";
 
 export default function CreatePostPage() {
   // 🔹 All state
   const [title, setTitle] = useState("");
-  const [des, setDes] = useState("");
   const [coverImg, setCoverImg] = useState(null);
-  const [tags, setag] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [isDisable, setIsDisable] = useState(true);
+
+  // 🔹 Add Tag Fn
+  const addTag = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+
+      const tag = tagInput.trim().replace(",", "");
+
+      if (!tag) return;
+
+      if (tags.includes(tag)) {
+        setTagInput("");
+        return;
+      }
+
+      setTags([...tags, tag]);
+      setTagInput("");
+    }
+  };
+
+  // 🔹 Remove Tag Fn
+  const removeTag = (tag) => {
+    setTags(tags.filter((item) => item !== tag));
+  };
+
+  // 🔹 Check Disable
+  useEffect(() => {
+    setIsDisable(!title.trim() || !coverImg || tags.length === 0 || loading);
+  }, [coverImg, loading, tags.length, title]);
+
+  // 🔹 Handle create post fn
+  async function CreatePost(e) {
+    e.preventDefault();
+    if (isDisable) return;
+    setLoading(true);
+    const formData = new FormData();
+    console.log(formData);
+
+    formData.append("image", coverImg);
+    formData.append("caption", title);
+    formData.append("tags", tags.join(", "));
+
+    axios.post("http://localhost:3000/create-post", formData).then((res) => {
+      console.log(res);
+    });
+
+    setTimeout(() => {
+      setLoading(false);
+      setCoverImg(null);
+      setTitle("");
+      setTags([]);
+    }, 3000);
+  }
 
   return (
     <section className="min-h-screen py-10 text-textPrimary">
@@ -23,7 +80,10 @@ export default function CreatePostPage() {
         </div>
 
         {/* Form */}
-        <form className="space-y-6 rounded-2xl border border-border bg-bgSoft p-6 shadow-xl shadow-shadow/20">
+        <form
+          onSubmit={CreatePost}
+          className="space-y-6 rounded-2xl border border-border bg-bgSoft p-6 shadow-xl shadow-shadow/20"
+        >
           {/* Title */}
           <div>
             <label className="mb-2 block text-sm font-medium text-textMuted">
@@ -31,6 +91,7 @@ export default function CreatePostPage() {
             </label>
 
             <input
+              required
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -76,11 +137,12 @@ export default function CreatePostPage() {
               )}
 
               <input
-                id="coverImage"
-                onChange={(e) => setCoverImg(e.target.files[0])}
+                required
                 type="file"
+                id="coverImage"
                 accept="image/*"
                 className="hidden"
+                onChange={(e) => setCoverImg(e.target.files[0])}
               />
             </label>
           </div>
@@ -91,37 +153,38 @@ export default function CreatePostPage() {
               Tags
             </label>
 
-            <input
-              type="text"
-              value={tags}
-              onChange={(e) => {
-                console.log(e);
-                console.log(e.target.value);
-                setag(e.target.value);
-              }}
-              placeholder="React, Javascript, Ai"
-              className="w-full rounded-xl border border-border bg-surfaceHard px-4 py-3 text-textPrimary placeholder:text-textDark outline-none transition-all duration-200 hover:border-hover focus:border-accent"
-            />
+            <div className="flex min-h-[52px] flex-wrap items-center gap-2 rounded-xl border border-border bg-surfaceHard px-3 py-2 transition-all duration-200 hover:border-hover focus-within:border-accent">
+              {tags.map((tag) => (
+                <div
+                  key={tag}
+                  className="flex items-center gap-2 rounded-lg bg-accentSoft px-3 py-1 text-sm text-accent"
+                >
+                  <span>#{tag}</span>
+
+                  <button
+                    type="button"
+                    onClick={() => removeTag(tag)}
+                    className="text-base hover:text-error"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+
+              <input
+                type="text"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={addTag}
+                placeholder={tags.length ? "" : "React, JavaScript, AI"}
+                className="flex-1 bg-transparent py-1 text-textPrimary placeholder:text-textDark outline-none"
+              />
+            </div>
 
             <p className="mt-2 text-xs text-textDark">
-              Separate tags using commas.
-              <kbd className="text-accent"> (,)</kbd>
+              Press <kbd className="text-accent">Enter</kbd> or{" "}
+              <kbd className="text-accent">,</kbd> to add a tag.
             </p>
-          </div>
-
-          {/* Description */}
-          <div>
-            <label className="mb-2 block text-sm font-medium text-textMuted">
-              Description
-            </label>
-
-            <textarea
-              rows={8}
-              value={des}
-              onChange={(e) => setDes(e.target.value)}
-              placeholder="Write your post here..."
-              className="w-full resize-none rounded-xl border border-border bg-surfaceHard px-4 py-3 text-textPrimary placeholder:text-textDark outline-none transition-all duration-200 hover:border-hover focus:border-accent"
-            />
           </div>
 
           {/* Footer */}
@@ -132,9 +195,14 @@ export default function CreatePostPage() {
 
             <button
               type="submit"
-              className="rounded-xl bg-accent px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-accentHover active:scale-95"
+              disabled={isDisable}
+              className="rounded-xl bg-accent px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-accentHover active:scale-95 disabled:opacity-45 disabled:cursor-not-allowed"
             >
-              Publish Post
+              {loading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <>Publish Post</>
+              )}
             </button>
           </div>
         </form>

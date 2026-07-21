@@ -2,25 +2,24 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 export default function AppLayout() {
+  const NAV_ITEMS = [
+    { name: "Home", path: "/" },
+    { name: "Create Post", path: "/create-post" },
+  ];
   return (
     <figure className="w-screen h-screen overflow-x-hidden overflow-y-auto bg-bg *:text-textPrimary">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-          <NavLink
-            to="/"
-            className="text-2xl font-bold tracking-tight text-textPrimary"
-          >
+          {/* Logo */}
+          <NavLink to="/" className="text-2xl font-bold tracking-tight">
             Post<span className="text-accent">ify</span>
           </NavLink>
 
-          <nav>
+          <nav className="flex items-center gap-4">
+            {/* Navigation */}
             <ul className="flex items-center gap-2">
-              {[
-                { name: "Home", path: "/" },
-                { name: "Create Post", path: "/create-post" },
-                { name: "Profile", path: "/profile" },
-              ].map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <li key={item.path}>
                   <NavLink
                     end={item.path === "/"}

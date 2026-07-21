@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Post from "../components/posts/Post";
+import axios from "axios";
 
 export default function PostsPage() {
+  // 🔹 All  State
+  const [posts, setPost] = useState([]);
+
+  // 🔹 Get All post
+  useEffect(() => {
+    axios.get("http://localhost:3000/").then((res) => {
+      setPost(res.data.posts);
+    });
+  }, []);
+
   return (
     <section className="relative min-h-screen bg-bg text-textPrimary">
       {/* Hero */}
@@ -29,52 +40,15 @@ export default function PostsPage() {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <Post
-            title="How AI is Changing Modern Software Development"
-            image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
-            description="Learn how AI tools are transforming developer workflows, improving productivity, and shaping the future of software engineering."
-            author="John Doe"
-            date="Jul 19, 2026"
-          />
-
-          <Post
-            title="How AI is Changing Modern Software Development"
-            image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
-            description="Learn how AI tools are transforming developer workflows, improving productivity, and shaping the future of software engineering."
-            author="John Doe"
-            date="Jul 19, 2026"
-          />
-
-          <Post
-            title="How AI is Changing Modern Software Development"
-            image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
-            description="Learn how AI tools are transforming developer workflows, improving productivity, and shaping the future of software engineering."
-            author="John Doe"
-            date="Jul 19, 2026"
-          />
-          <Post
-            title="How AI is Changing Modern Software Development"
-            image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
-            description="Learn how AI tools are transforming developer workflows, improving productivity, and shaping the future of software engineering."
-            author="John Doe"
-            date="Jul 19, 2026"
-          />
-
-          <Post
-            title="How AI is Changing Modern Software Development"
-            image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
-            description="Learn how AI tools are transforming developer workflows, improving productivity, and shaping the future of software engineering."
-            author="John Doe"
-            date="Jul 19, 2026"
-          />
-
-          <Post
-            title="How AI is Changing Modern Software Development"
-            image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
-            description="Learn how AI tools are transforming developer workflows, improving productivity, and shaping the future of software engineering."
-            author="John Doe"
-            date="Jul 19, 2026"
-          />
+          {posts?.map((post) => (
+            <Post
+              key={post._id}
+              title={post.caption}
+              image={post.image}
+              author="John Doe"
+              date="Jul 19, 2026"
+            />
+          ))}
         </div>
       </main>
     </section>
